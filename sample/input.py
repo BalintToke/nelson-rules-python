@@ -1,6 +1,6 @@
 from threading import Thread
 from threading import Event
-from pynelson.types import Data 
+from pynelson.types import Data,ExceptionEvent
 import random
 from queue import Queue
 from datetime import datetime
@@ -27,8 +27,13 @@ class Input(Thread):
         try:
             while not self.stop_event.wait(self.data_rate):
                 self.data_queue.put(Data(random.randrange(self.min_value,self.max_value,1),None,datetime.now()))
-        except:
-            pass
+        except Exception as e:
+            self.exception_queue.put(
+                ExceptionEvent(
+                    self.ident,
+                    e)
+                )
+            
     
 
     

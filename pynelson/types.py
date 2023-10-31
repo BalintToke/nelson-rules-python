@@ -14,6 +14,10 @@ class Data:
             value,
             id=None,
             timestamp=None) -> None:
+        
+        if not isinstance(value,int) and not isinstance(value,float):
+            raise ValueError("Invalid Data value")
+
         self.value=value
         self.id=id
         if timestamp==None:
